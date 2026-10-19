@@ -1,0 +1,140 @@
+################################################################################
+# PARM Preprocessing Pipeline Configuration File
+################################################################################
+# This file configures the PARM preprocessing pipeline to generate input data
+# for PARM model training from raw MPRA counts data.
+# 
+# For detailed explanations of each parameter, see the README.md file.
+################################################################################
+
+#### INPUT PARAMETERS ##########################################################
+################################################################################
+
+# Input counts data
+###################
+# Base directory containing your input count files
+INPUT_BASEDIR: all_cell_type_data
+
+# List of dataset subdirectories within INPUT_DIR
+# Each subdirectory should contain chromosome files (chr1.txt.gz, chr2.txt.gz, etc.)
+INPUT:
+  - train_inputs_all
+
+# Regulatory features
+######################
+# Base directory containing regulatory feature BED files
+REGULATORY_FEATURES_BASEDIR: "all_cell_type_data/regulatory_features"
+
+# List of regulatory feature sets to process
+# Each feature set should have BED files for each chromosome
+REGULATORY_FEATURES:
+  - tss_selection_m300_p100
+
+# Features in folds
+######################
+# Directory containing fold assignments for regulatory features
+# Should contain features_in_fold0.bed through features_in_fold4.bed and features_in_test.bed
+FEATURES_IN_FOLDS_BASEDIR: all_cell_type_data/regulatory_features/features_in_folds
+
+#### OTHER REQUIRED PARAMETERS #################$$$$$###########################
+################################################################################
+
+# Chromosome list
+##################
+# List of chromosomes to process (must match chromosome files in your input data)
+CHR:
+  - chr1
+  - chr2
+  - chr3
+  - chr4
+  - chr5
+  - chr6
+  - chr7
+  - chr8
+  - chr9
+  - chr10
+  - chr11
+  - chr12
+  - chr13
+  - chr14
+  - chr15
+  - chr16
+  - chr17
+  - chr18
+  - chr19
+  - chr20
+  - chr21
+  - chr22
+  - chrX
+
+# Cell type mapping
+####################
+# Map cell type names to corresponding columns in your input count files
+# This allows grouping biological replicates and calculating cell-type-specific activity
+CELLTYPES_TO_COLUMNS:
+  # Random:
+  #   - Random_B1
+  #   - Random_B2
+  HepG2:
+    - HepG2_B1
+    - HepG2_B2
+  LNCaP:
+    - LNCaP_B1
+    - LNCaP_B2
+  K562:
+    - K562_B1
+    - K562_B2
+  HCT116:
+    - HCT116_B1
+    - HCT116_B2
+  MCF7:
+    - MCF7_B1
+    - MCF7_B2
+  U2OS:
+    - U2OS_B1
+    - U2OS_B2
+  HEK293:
+    - HEK293_B1
+    - HEK293_B2
+
+
+# Normalization settings
+#########################
+# Column name used for normalization (typically iPCR or pDNA)
+# This represents the input library counts for calculating activity ratios
+NORMALIZATION_COLUMN: 
+  - pDNA_MH04_T2
+
+# Minimum count threshold for the normalization column
+# Fragments with counts below this threshold will be filtered out
+NORMALIZATION_THRESHOLD: 10
+
+#### ADDITIONAL CONFIGURATION ##################################################
+################################################################################
+
+# Output directory name
+########################
+# Directory where all pipeline outputs will be stored
+OUTDIR: "all_cell_type_out_data"
+
+# Reference genome
+###################
+# Path to the reference genome FASTA file (used for extracting DNA sequences)
+# Should match the genome build used for your regulatory features
+GENOME: /mnt/scratche/slow/halab/Jack/parm/PARM_preprocessing_pipeline/example_data/hg19.fa
+
+# DNA sequence matrix size
+###########################
+# Size of the DNA sequence window around each regulatory feature (in base pairs)
+# This determines the input size for the PARM model (L_max parameter)
+MATRIX_SIZE: 600
+
+# Random seed
+##############
+# Random seed for reproducible results across pipeline runs
+RANDOM_SEED: 42
+
+# Pseudocount for RPM normalization
+###################################
+# Pseudocount added to prevent log(0) errors during normalization
+NORMALIZATION_PSEUDOCOUNT: AUTO
