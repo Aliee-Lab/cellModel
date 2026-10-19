@@ -23,7 +23,7 @@ We use the MH4 library data of Barbadilla-Martinéz et al. (2026). The data can 
 
 To train our universal PARM model, we processed the data with the [PARM preprocessing pipeline](https://github.com/vansteensellab/PARM_preprocessing_pipeline) using the regulatory features data in the `example_data` directory in the pipeline repository and the configuration file `all_cell_type_config.yml`. Note that this gives the same folds as those used to train the original, cell-type-specific PARM models.
 
-Unlike the original per-cell-type training, the universal model requires a single `celltype_to_columns.json` covering **all** cell types at once (rather than one file per cell type), so that `normalize_counts.py` and `get_onehot_from_normalized_data.py` write all cell types' `Log2RPM_*` columns into the same fold-level HDF5 files. This file is provided at `config/celltype_to_columns_all.json`.
+During the analysis, we use the original metadata files to visualize the ground-truth distributions of activity levels. These metadata files 
 
 ## Repository structure
 
